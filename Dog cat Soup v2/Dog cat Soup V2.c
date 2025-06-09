@@ -58,6 +58,10 @@ int main() {
     int hasTower = 0;
     int SCR_POS = -1;
 	int TWR_POS = -1;
+    int toyMouse = 0;
+    int toyLaser = 0;
+    int beforeMood = mood;
+    int beforeInimacy = intimacy;
 
     printMainScreen();
     printf("야옹이의 이름은 개냥이입니다.\n");
@@ -177,9 +181,38 @@ int main() {
             for (int i = 0; i < ROOM_WIDTH; i++) printf("#");
             printf("\n\n");
 
+            int optionCount = 2;
+			printf("\n어떤 상호작용을 하시겠습니까?\n");
+            printf("0. 아무것도 하지 않기\n");
+            printf("1. 긁어 주기\n");
 
+            if (toyMouse == 1 && toyLaser == 1) {
+                printf("2. 장난감 쥐로 놀아 주기\n");
+                printf("3. 레이저 포인터로 놀아 주기\n");
+                optionCount = 4;
+            }
+            else if (toyMouse == 1) {
+                printf("2. 장난감 쥐로 놀아 주기\n");
+                optionCount = 3;
+            }
+            else if (toyLaser == 1) {
+                printf("2. 레이저 포인터로 놀아 주기\n");
+                optionCount = 3;
+			}
 
-        printf("\n어떤 상호작용을 하시겠습니까? 0. 아무것도 하지 않음 1. 긁어 주기\n");
+			beforeMood = mood;
+            beforeInimacy = intimacy;
+
+            while (1) {
+                printf(">> ");
+                scanf_s("%d", &choice);
+                if (choice >= 0 && choice < optionCount) break;
+			}
+
+            if ( choice == 0) {
+                if (mood > 0){
+                    mood = mood - 1;
+                    printf("개냥이의 기분이 나빠졌습니다.\n");
 
         while (1) {
             printf(">> ");
