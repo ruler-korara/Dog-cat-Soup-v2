@@ -209,60 +209,61 @@ int main() {
                 if (choice >= 0 && choice < optionCount) break;
 			}
 
-            if ( choice == 0) {
-                if (mood > 0){
+            if (choice == 0) {
+                if (mood > 0) {
                     mood = mood - 1;
-                    printf("개냥이의 기분이 나빠졌습니다.\n");
-
-        while (1) {
-            printf(">> ");
-            scanf_s("%d", &choice);
-            if (choice == 0 || choice == 1) {
-                if (choice == 0) {
-                    printf("아무것도 하지 않습니다.\n");
-                    Sleep(500);
-                    printf("4/6의 확률로 친밀도가 떨어집니다.\n");
-                    Sleep(500);
-                    printf("주사위를 굴립니다. 또르륵...\n");
-                    Sleep(500);
-                    int dice = RollDice();
-                    Sleep(500);
-                    printf("%d이(가) 나왔습니다!\n", dice);
-                    if (dice <= 4) {
-                        intimacy = (intimacy > 0) ? intimacy - 1 : 0;
-                        printf("친밀도가 떨어집니다.\n");
-                    }
-                    else {
-                        printf("다행히 친밀도가 떨어지지 않습니다.\n");
-                    }
-                    printf("현재 친밀도: %d\n", intimacy);
-                    break;
+                    printf("개냥이의 기분이 나빠졌습니다: %d -> %d\n", beforeMood, mood);
                 }
-                else if (choice == 1) {
-                    printf("개냥이의 턱을 긁어주었습니다.\n");
-                    Sleep(500);
-                    printf("2/6의 확률로 친밀도가 높아집니다.\n");
-                    Sleep(500);
-                    printf("주사위를 굴립니다. 또르륵...\n");
-                    Sleep(500);
-                    int dice = RollDice();
-                    Sleep(1000);
-                    printf("%d이(가) 나왔습니다!\n", dice);
-                    if (dice >= 5) {
-                        intimacy = (intimacy < 4) ? intimacy + 1 : 4;
-                        printf("친밀도가 높아집니다.\n");
+
+                if (RollDice <= 5) {
+                    if (intimacy > 0) {
+                        intimacy = intimacy - 1;
+                        printf("개냥이와의 관계가 나빠집니다.\n");
                     }
-                    else {
-                        printf("친밀도는 그대로입니다.\n");
-                    }
-                    printf("현재 친밀도: %d\n", intimacy);
-                    Sleep(1000);
-                    break;
                 }
             }
-            else {
+            else if (choice == 1) {
+                printf("개냥이의 기분은 그대로 입니다.\n");
+
+                if (RollDice >= 5) {
+                    if (intimacy < 4) {
+                        intimacy = intimacy + 1;
+                        printf("집사와의 관계가 깊어집니다.\n");
+                    }
+                }
+            }
+            else if (choice == 2) {
+                if (mood < 3) {
+                    mood = mood + 1;
+                }
+                printf("장난감 쥐로 놀아주었습니다. 개냥이의 기분이 조금 좋아졌습니다: %d -> %d\n", beforeMood, mood);
+
+                if (RollDice >= 4) {
+                    if (intimacy < 4) {
+                        intimacy = intimacy + 1;
+                        printf("집사와의 관계가 깊어집니다.\n");
+                    }
+                }
+            }
+            else if (choice == 3) {
+                if (mood <= 1) {
+                    mood = mood + 2;
+                }
+                else {
+                    mood = 3;
+                }
+                printf("레이저 포인터로 신나게 놀아 주었습니다. 개냥이의 기분이 꽤 좋아졌습니다: %d -> %d\n", beforeMood, mood);
+
+                if (dice >= 2) {
+                    if (intimacy < 4) {
+                        intimacy = intimacy + 1;
+                        printf("집사와의 관계가 깊어집니다.\n");
+                    }
+                }
+            }
 
             }
+       
         }
     }
 }
