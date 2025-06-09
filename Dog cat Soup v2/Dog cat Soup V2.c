@@ -71,8 +71,41 @@ int main() {
     system("cls");
 
     while (1) {
+        if (turnCount == 4 && questDone == 0) {
+            int choice;
+            beforeMood = mood;
+
+            printf("\n[돌발 퀘스트] 고양이 운세 돌리기!\n");
+            printf("개냥이의 운세를 확인하려면 1을 입력하세요: ");
+
+            while (1) {
+                scanf_s("%d", &choice);
+                if (choice == 1) break;
+            }
+
+            int fortune = rand() % 3;
+
+            if (fortune == 0) {
+                if (mood > 0) mood--;
+                printf("흉입니다... 기분이 나빠졌습니다: %d -> %d\n", beforeMood, mood);
+            }
+            else if (fortune == 1) {
+                printf("보통입니다. 기분은 그대로입니다: %d\n", mood);
+            }
+            else {
+                if (mood < 3) mood++;
+                printf("대길입니다! 기분이 좋아졌습니다: %d -> %d\n", beforeMood, mood);
+            }
+
+            questDone = 1;
+
+            continue;
+        }
+
+    while (1) {
         Sleep(1000);
         system("cls");
+
 
         printState(soupCount, intimacy, cp, mood);
 
