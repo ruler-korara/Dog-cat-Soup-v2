@@ -62,6 +62,8 @@ int main() {
     int toyLaser = 0;
     int beforeMood = mood;
     int beforeInimacy = intimacy;
+	int turnCount = 0;
+	int questDone = 0;
 
     printMainScreen();
     printf("야옹이의 이름은 개냥이입니다.\n");
@@ -262,8 +264,89 @@ int main() {
                 }
             }
 
+            int produce = 0;
+            if (mood >0) {
+                produce = (mood - 1) + intimacy;
             }
-       
+            else {
+                produce = intimacy;
+            }
+            cp = cp + produce;
+
+			printf("개냥이의 기분과 친밀도에 따라서 CP가 %d 포인트 생산되었습니다.\n", produce);
+			printf("보유 CP: %d 포인트\n", cp);
+
+			int shopChoice;
+            while (1) {
+                printf("\n상점에서 물건을 살 수 있습니다.\n");
+				printf("어떤 물건을 구매할까요?\n");
+				printf("0. 아무것도 구매하지 않는다.\n");
+
+				printf(" 1. 장난감 쥐: 1 CP");
+				if (toyMouse == 1) printf(" (품절)");
+                printf("\n");
+
+				printf(" 2. 레이저 포인터: 2 CP");
+                if (toyLaser == 1) printf(" (품절)");
+				printf("\n");
+
+                printf(" 3. 스크래처: 4 CP");
+				if (hasScratcher == 1) printf(" (품절)");
+				printf("\n");
+
+				printf(" 4. 캣타워: 6 CP");
+				if (hasTower == 1) printf(" (품절)");
+				printf("\n");
+
+				printf(">> ");
+				scanf_s("%d", &shopChoice);
+
+                if (shopChoice < 0 || shopChoice > 4) continue;
+
+                if (shopChoice == 0) break;
+
+                if ((shopChoice == 1 && toyMouse == 1) || (shopChoice == 2 && toyLaser == 1) || (shopChoice == 3 && hasScratcher == 1) || (shopChoice == 4 && hasTower == 1)) {
+                    printf("이미 구매한 물건입니다.\n");
+                    continue;
+                }
+
+                int cost = 0;
+                if (shopChoice == 1) cost = 1;
+                if (shopChoice == 2) cost = 2;
+                if (shopChoice == 3) cost = 4;
+                if (shopChoice == 4) cost = 6;
+
+                if (cp < cost) {
+                    printf("CP가 부족합니다.\n");
+                    continue;
+                }
+
+                cp = cp - cost;
+
+                if (shopChoice == 1) {
+                    toyMouse = 1;
+                    printf("장난감 쥐를 구매했습니다.\n");
+                }
+                else if (shopChoice == 2) {
+                    toyLaser = 1;
+                    printf("레이저 포인터를 구매했습니다.\n");
+                }
+                else if (shopChoice == 3) {
+                    hasScratcher = 1;
+                    printf("스크래처를 구매했습니다.\n");
+                    while (1) {
+                        int pos = rand() % (ROOM_WIDTH - 2) + 1;
+                        if (pos != HOME_POS && pos != BOWL_POS && pos != SCR_POS && pos != catPosition) {
+                            TWR_POS = pos;
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+            printf("현재 친밀도: %d\n", intimacy);
+            turnCount++;
         }
     }
+    return 0;
 }
