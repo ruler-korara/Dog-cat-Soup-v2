@@ -3,7 +3,7 @@
 #include <time.h>
 #include <Windows.h>
 
-#define ROOM_WIDTH 6
+#define ROOM_WIDTH 10
 #define HOME_POS 0
 #define BOWL_POS (ROOM_WIDTH - 1)
 
@@ -22,9 +22,17 @@ void printMainScreen() {
     printf("    \\)()-())\n\n");
 }
 
-void printState(int soupCount, int intimacy) {
+void printState(int soupCount, int intimacy, int cp, int mood) {
     printf("==================== 현재 상태 ====================\n");
     printf("현재까지 만든 수프: %d개\n", soupCount);
+	printf("CP: %d 포인트\n", cp);
+    printf("개냥이 기분(0~3): %d\n", mood);
+    switch (mood) {
+    case 0: printf("기분이 매우 나쁩니다.\n"); break;
+    case 1: printf("심심해합니다.\n"); break;
+	case 2: printf("식빵을 굽습니다.\n"); break;
+	case 3: printf("골골송을 부릅니다.\n"); break;
+    }
     printf("집사와의 관계(0~4): %d\n", intimacy);
     switch (intimacy) {
     case 0: printf("곁에 오는 것조차 싫어합니다.\n"); break;
@@ -45,6 +53,9 @@ int main() {
     int choice;
     int catPosition = 0;
     int prevCatPosition = 0;
+	int turn = 0;
+    int cp = 0;
+    int mood = 3;
 
     printMainScreen();
     printf("야옹이의 이름은 개냥이입니다.\n");
@@ -55,7 +66,7 @@ int main() {
         Sleep(1000);
         system("cls");
 
-        printState(soupCount, intimacy);
+        printState(soupCount, intimacy, cp);
 
         int moveCat(int catPosition, int intimacy, int prevCatPosition); {
             printf("\n개냥이 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n");
