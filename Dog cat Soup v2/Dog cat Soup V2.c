@@ -10,7 +10,6 @@
 int RollDice() {
     return rand() % 6 + 1;
 }
-
 void printMainScreen() {
     printf("**** 야옹이와 수프 ****\n\n");
     printf("      /\\_/\\\n");
@@ -52,10 +51,11 @@ int main() {
     int intimacy = 2;
     int choice;
     int catPosition = 0;
-    int prevCatPosition = 0;
-	int turn = 0;
+	int prevCatPosition = 0;
     int cp = 0;
     int mood = 3;
+    int hasScratcher = 0;
+    int hasTower = 0;
 
     printMainScreen();
     printf("야옹이의 이름은 개냥이입니다.\n");
@@ -66,40 +66,22 @@ int main() {
         Sleep(1000);
         system("cls");
 
-        printState(soupCount, intimacy, cp);
+        printState(soupCount, intimacy, cp, mood);
 
         int moveCat(int catPosition, int intimacy, int prevCatPosition); {
-            printf("\n개냥이 이동: 집사와 친밀할수록 냄비 쪽으로 갈 확률이 높아집니다.\n");
-            printf("주사위 눈이 %d 이상이면 냄비 쪽으로 이동합니다.\n", 6 - intimacy);
+            printf("\n6-2: 주사위 눈이 %d이하면 그냥 기분이 나빠집니다.\n" ,6-intimacy);
             printf("주사위를 굴립니다. 또르륵...\n");
             Sleep(500);
             int dice = RollDice();
             Sleep(500);
-            printf("%d이(가) 나왔습니다!\n", dice);
-
-            prevCatPosition = catPosition; // 이동 전 위치 저장
-
-            if (dice >= 6 - intimacy) {
-                // 오른쪽 이동
-                if (catPosition < BOWL_POS) {
-                    (catPosition)++;
-                    printf("냄비 쪽으로 움직입니다.\n");
-                }
-                else {
-                    printf("오른쪽 벽에 막혀서 움직일 수 없습니다.\n");
-                }
+            if(dice<= 6 - intimacy) {
+                printf("%d이(가) 나왔습니다!\n", dice);
+                mood = (mood > 0) ? mood - 1 : 0;
+                printf("개냥이의 기분이 나빠집니다.\n");
+                mood--;
             }
-            else {
-                // 왼쪽 이동
-                if (catPosition > HOME_POS) {
-                    (catPosition)--;
-                    printf("집 쪽으로 움직입니다.\n");
-                }
-                else {
-                    printf("왼쪽 벽에 막혀서 움직일 수 없습니다.\n");
-                }
-            }
-        }
+
+			prevCatPosition = catPosition;
 
         int renderRoom(int catPosition, int prevCatPosition); {
             printf("\n");
