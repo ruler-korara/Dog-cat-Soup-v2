@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <Windows.h>
+#include <locale.h>
 
 #define ROOM_WIDTH 10
 #define HOME_POS 0
@@ -46,6 +47,9 @@ void printState(int soupCount, int intimacy, int cp, int mood) {
 
 
 int main() {
+	setlocale(LC_ALL, "korean");
+	SetConsoleOutputCP(65001);
+	
     srand(time(NULL));
     int soupCount = 0;
     int intimacy = 2;
